@@ -21,6 +21,8 @@ android {
 }
 greendao {
     schemaVersion 1//数据库模式的当前版本  如果您更改实体/数据库架构，则必须增加此值。默认为1。
+    targetGenDir 'src/main/java'//指定DaoMaster 等生成的位置(默认和实体类在一个目录下)
+    daoPackage 'com.xuesen.db'//指定DaoMaster 等生成的包名
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -33,4 +35,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     compile 'org.greenrobot:greendao:3.2.2'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor  'com.jakewharton:butterknife-compiler:8.8.1'
 }

@@ -5,19 +5,40 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.xuesen.R;
+import com.xuesen.adapter.ActionListAdapter;
+import com.xuesen.db.ActionDao;
+import com.xuesen.db.DBManager;
+import com.xuesen.modle.Action;
+
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+    @BindView(R.id.recyclerview)
+    RecyclerView recyclerView;
+
+    private List<Action> actions = new ArrayList<>();
+    private ActionListAdapter actionadapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -28,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        setUpView();
     }
 
     @Override
@@ -52,5 +75,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setUpView() {
+        actionadapter = new ActionListAdapter(actions, getApplication());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(actionadapter);
+
+        update();
+    }
+
+    @OnClick(R.id.add_btn)
+    public void OnTextaddClick(View view) {
+        Action action = new Action();
+        action.setName("哈哈哈");
+        DBManager.getInstance(MainActivity.this).getWritableDaoSession().getActionDao().insert(action);
+        update();
+    }
+
+    private void update() {
+        ActionDao actionDao = DBManager.getInstance(MainActivity.this).getReadableDaoSession().getActionDao();
+        QueryBuilder<Action> actionQueryBuilder = actionDao.queryBuilder();
+//        actionQueryBuilder.where(ActionDao.Properties.Name.gt("")).orderAsc(ActionDao.Properties.Name);
+//        List<Action> list = actionQueryBuilder.list();
+        actions = actionQueryBuilder.build().list();
+        actionadapter.setActions(actions);
     }
 }

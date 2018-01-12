@@ -9,17 +9,18 @@ import org.greenrobot.greendao.annotation.Generated;
  *  
  */
 @Entity
-public class BabyInfo  {
+public class BabyInfo {
     @Id
     private Long id;
-    public String name;
-    public String birthday;
-    public String sex;
-    public String weight;//重量
-    public String height;//身高
+    private String name;
+    private String birthday;
+    private String sex;
+    private String weight;//重量
+    private String height;//身高
+
     @Generated(hash = 713797724)
     public BabyInfo(Long id, String name, String birthday, String sex,
-            String weight, String height) {
+                    String weight, String height) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -27,42 +28,55 @@ public class BabyInfo  {
         this.weight = weight;
         this.height = height;
     }
+
     @Generated(hash = 421042228)
     public BabyInfo() {
     }
+
     public Long getId() {
         return this.id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getName() {
         return this.name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getBirthday() {
         return this.birthday;
     }
+
     public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
+
     public String getSex() {
         return this.sex;
     }
+
     public void setSex(String sex) {
         this.sex = sex;
     }
+
     public String getWeight() {
         return this.weight;
     }
+
     public void setWeight(String weight) {
         this.weight = weight;
     }
+
     public String getHeight() {
         return this.height;
     }
+
     public void setHeight(String height) {
         this.height = height;
     }
