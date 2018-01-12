@@ -3,6 +3,12 @@ package com.xuesen.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.xuesen.modle.Action;
+
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.List;
+
 /**
  *  Created by 智光 on 2018/1/12 10:38
  *  这里声明一个数据库管理者单例
@@ -90,17 +96,16 @@ public class DBManager {
     }
 
 
-//    /**
-//     * 查询用户列表
-//     */
-//    public List<User> queryUserList() {
-//        DaoMaster daoMaster = new DaoMaster(getReadableDatabase());
-//        DaoSession daoSession = daoMaster.newSession();
-//        UserDao userDao = daoSession.getUserDao();
-//        QueryBuilder<User> qb = userDao.queryBuilder();
-//        List<User> list = qb.list();
-//        return list;
-//    }
+    /**
+     * 查询用户列表
+     */
+    public List<Action> queryActionList() {
+        DaoMaster daoMaster = new DaoMaster(getReadableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        ActionDao userDao = daoSession.getActionDao();
+        QueryBuilder<Action> qb = userDao.queryBuilder();
+        return qb.list();
+    }
 //
 //    /**
 //     * 查询用户列表

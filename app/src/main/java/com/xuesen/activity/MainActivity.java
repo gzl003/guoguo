@@ -27,6 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * guoguo0302
+ */
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
@@ -87,10 +90,25 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.add_btn)
     public void OnTextaddClick(View view) {
+
         Action action = new Action();
         action.setName("哈哈哈");
         DBManager.getInstance(MainActivity.this).getWritableDaoSession().getActionDao().insert(action);
         update();
+    }
+
+    @OnClick(R.id.remove_btn)
+    public void OnTextremoveClick(View view) {
+        if (view.getTag() == null) {
+            view.setTag(true);
+        }
+        if ((boolean) view.getTag()) {
+            view.setTag(false);
+        } else {
+            view.setTag(true);
+        }
+        actionadapter.setEdit((boolean) view.getTag());
+
     }
 
     private void update() {
