@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion 26
     buildToolsVersion "27.0.1"
@@ -12,18 +16,49 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+
+    signingConfigs {
+        debug {
+            // No debug config
+        }
+
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
         }
     }
+
+    buildTypes {
+        debug {
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            versionNameSuffix DEBUG_SUFFIX
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+
+            minifyEnabled false
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
 }
 greendao {
-    schemaVersion 1//数据库模式的当前版本  如果您更改实体/数据库架构，则必须增加此值。默认为1。
+    schemaVersion 2//数据库模式的当前版本  如果您更改实体/数据库架构，则必须增加此值。默认为1。
     targetGenDir 'src/main/java'//指定DaoMaster 等生成的位置(默认和实体类在一个目录下)
     daoPackage 'com.xuesen.db'//指定DaoMaster 等生成的包名
 }
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'

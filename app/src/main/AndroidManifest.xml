@@ -19,8 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.CountActivity"></activity>
+        <activity android:name=".activity.SettingActivity"
+            android:label="设置"/>
+        <activity android:name=".activity.CountActivity"
+            android:label="日记"/>
     </application>
 
 </manifest>

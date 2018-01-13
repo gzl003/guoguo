@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.xuesen.R;
@@ -27,6 +28,14 @@ public class BaseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//是否显示左上角默认的返回按钮
         getSupportActionBar().setHomeButtonEnabled(true);//按钮是否可以点击（实测无用，false下依然可以点击--已经设置了该Activity的父级Activity）
 
+    }
+
+    //actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.layout.menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

@@ -8,30 +8,45 @@
     tools:context="com.xuesen.activity.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <ImageView
+    <TextView
+        android:id="@+id/action_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/text_smill"
+        android:text="@string/baby_activity"
+        android:textColor="@color/ic_black"
+        android:textSize="@dimen/text_xsmil"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/add_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
+        android:layout_margin="@dimen/text_smill"
+        android:padding="@dimen/text_smill"
+        android:shadowColor="@color/colorAccent"
+        android:text="@string/btn_add"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerview"
-        android:contentDescription="@string/btn" />
+        app:layout_constraintRight_toLeftOf="@id/remove_btn"
+        app:layout_constraintTop_toBottomOf="@+id/action_title" />
 
-    <ImageView
+    <Button
         android:id="@+id/remove_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_remove"
+        android:layout_margin="@dimen/text_smill"
+        android:padding="@dimen/text_smill"
+        android:shadowColor="@color/colorAccent"
+        android:text="@string/btn_remove"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/add_btn"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerview"
-        android:contentDescription="@string/btn" />
+        app:layout_constraintTop_toBottomOf="@+id/action_title" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintTop_toBottomOf="@+id/add_btn"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:padding="@dimen/text_smill"
+        app:layout_constraintTop_toBottomOf="@id/add_btn"/>
 
 </android.support.constraint.ConstraintLayout>

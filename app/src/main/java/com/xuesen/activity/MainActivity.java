@@ -5,18 +5,23 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.xuesen.R;
 import com.xuesen.adapter.ActionListAdapter;
 import com.xuesen.db.ActionDao;
 import com.xuesen.db.DBManager;
+import com.xuesen.dialog.ActionDialog;
 import com.xuesen.modle.Action;
+import com.xuesen.utils.TimeUtils;
+import com.xuesen.utils.ToastUtils;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -28,14 +33,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * guoguo0302
+ *
  */
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
+    @BindView(R.id.remove_btn)
+    Button remove;
 
     private List<Action> actions = new ArrayList<>();
     private ActionListAdapter actionadapter;
+    private ActionDialog actionDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setSubtitle(TimeUtils.getCurrentDate());
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -65,12 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(MainActivity.this, SettingActivity.class);
             startActivity(intent);
@@ -82,40 +87,55 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpView() {
         actionadapter = new ActionListAdapter(actions, getApplication());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 4, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(actionadapter);
+        actionDialog = new ActionDialog(this);
+        actionDialog.setEditokListener(new ActionDialog.EditokListener() {
+            @Override
+            public void onOKcLick(Action action) {
+                ActionDao actionDao = DBManager.getInstance(MainActivity.this).getReadableDaoSession().getActionDao();
+                QueryBuilder<Action> actionQueryBuilder = actionDao.queryBuilder();
+                actionQueryBuilder.where(ActionDao.Properties.Name.eq(action.getName()));
+                if (actionQueryBuilder.list() != null && actionQueryBuilder.list().size() > 0) {
+                    ToastUtils.showShort(MainActivity.this, action.getName() + "事件已经存在了");
+                } else if (actions.size() > 11) {
+                    ToastUtils.showShort(MainActivity.this, action.getName() + "事件已经满了");
+                } else {
+                    DBManager.getInstance(MainActivity.this).getWritableDaoSession().getActionDao().insert(action);
+                    update();
+                }
 
+            }
+        });
         update();
     }
 
     @OnClick(R.id.add_btn)
     public void OnTextaddClick(View view) {
-
-        Action action = new Action();
-        action.setName("哈哈哈");
-        DBManager.getInstance(MainActivity.this).getWritableDaoSession().getActionDao().insert(action);
-        update();
+        actionDialog.show();
     }
 
     @OnClick(R.id.remove_btn)
     public void OnTextremoveClick(View view) {
         if (view.getTag() == null) {
             view.setTag(true);
+            actionadapter.setEdit(true);
+            remove.setText("完成");
+        }else{
+            if ((boolean) view.getTag()) {
+                view.setTag(false);
+                remove.setText("删除");
+            } else {
+                view.setTag(true);
+                remove.setText("完成");
+            }
+            actionadapter.setEdit((boolean) view.getTag());
         }
-        if ((boolean) view.getTag()) {
-            view.setTag(false);
-        } else {
-            view.setTag(true);
-        }
-        actionadapter.setEdit((boolean) view.getTag());
-
     }
 
     private void update() {
         ActionDao actionDao = DBManager.getInstance(MainActivity.this).getReadableDaoSession().getActionDao();
         QueryBuilder<Action> actionQueryBuilder = actionDao.queryBuilder();
-//        actionQueryBuilder.where(ActionDao.Properties.Name.gt("")).orderAsc(ActionDao.Properties.Name);
-//        List<Action> list = actionQueryBuilder.list();
         actions = actionQueryBuilder.build().list();
         actionadapter.setActions(actions);
     }
