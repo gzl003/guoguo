@@ -6,17 +6,26 @@
     android:layout_height="match_parent"
     tools:context="com.xuesen.activity.CountActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/hist_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/count_btn"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@drawable/ic_raduis"
+        android:elevation="@dimen/text_smill"
         android:gravity="center"
         android:textColor="@color/ic_white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/text_xxxbig"
         tools:text="吃饭" />
 
 </android.support.constraint.ConstraintLayout>

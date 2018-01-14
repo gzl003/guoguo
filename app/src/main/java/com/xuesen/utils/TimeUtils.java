@@ -31,7 +31,7 @@ public class TimeUtils {
      */
     public static String getCurrentTime() {
         long time = System.currentTimeMillis();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd / HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         Date d1 = new Date(time);
         String t1 = format.format(d1);
         Log.e("msg", t1);

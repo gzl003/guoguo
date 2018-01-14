@@ -5,8 +5,15 @@
     android:viewportHeight="50"
     android:viewportWidth="50">
 
+    <!--
+        M cx,cy : 将当前点移动到圆心的位置.
+        m -r,0 : 将当前点向左水平移动一个半径的距离.
+        a r,r 0 1,1 (r * 2),0 : 画上半圆
+        a r,r 0 1,1 -(r * 2),0 : 画下半圆
+       -->
     <path
         android:fillColor="@color/colorPrimary"
-        android:pathData="M0,25 a25,25 0 1 1 0 1" />
+        android:pathData="M25,25 m-24,0 a24,24 0 1,1 48 ,0
+                                        a24,24 0 1,1 -48 ,0" />
 
 </vector>

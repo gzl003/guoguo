@@ -52,7 +52,6 @@ public class ActionDialog extends BaseDialog {
             Action action = new Action();
             action.setName(name);
             action.setDate(TimeUtils.getCurrentDate());
-            action.setDate(String.valueOf(System.currentTimeMillis()));
             editokListener.onOKcLick(action);
             dismiss();
         } else {

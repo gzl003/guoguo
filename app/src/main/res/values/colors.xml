@@ -11,4 +11,10 @@
     <color name="ic_white">#ffffff</color>
 
     <color name="touming">#0000</color>
+    <color name="gray1">#333333</color>
+    <color name="gray2">#666666</color>
+    <color name="gray3">#999999</color>
+    <color name="gray4">#cdcdcd</color>
+
+
 </resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/text_smill">
+
+    <TextView
+        android:id="@+id/count_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/text_smill"
+        android:textColor="@color/ic_white"
+        android:background="@drawable/ic_raduis"
+        android:textSize="@dimen/text_big"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="吃饭" />
+
+    <TextView
+        android:id="@+id/count_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:textColor="@color/gray1"
+        android:padding="@dimen/text_smill"
+        android:textSize="@dimen/text_xxsmil"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/count_durc"
+        app:layout_constraintLeft_toRightOf="@id/count_name"
+        android:visibility="gone"
+        tools:text="10：20" />
+
+    <TextView
+        android:id="@+id/count_durc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray1"
+        android:textSize="@dimen/text_xxsmil"
+        android:padding="@dimen/text_smill"
+        app:layout_constraintLeft_toRightOf="@id/count_name"
+        app:layout_constraintTop_toBottomOf="@id/count_time"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="吃饭 一次" />
+
+
+</android.support.constraint.ConstraintLayout>

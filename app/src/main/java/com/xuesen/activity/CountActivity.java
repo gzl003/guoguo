@@ -1,6 +1,8 @@
 package com.xuesen.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xuesen.R;
+import com.xuesen.adapter.HistCountAdapter;
 import com.xuesen.db.ActionCountDao;
 import com.xuesen.db.DBManager;
 import com.xuesen.helper.Parameter;
@@ -33,9 +36,14 @@ public class CountActivity extends BaseActivity {
     @BindView(R.id.count_btn)
     TextView count_btn;
 
+    @BindView(R.id.hist_action)
+    RecyclerView hist_action;
+
     private ActionCount action;
     private List<ActionCount> actionCounts = new ArrayList<>();
     private String name;
+    private String date;
+    private HistCountAdapter histCountAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,24 +52,34 @@ public class CountActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         name = getIntent().getStringExtra(Parameter.INTENT_NAME);
+        date = getIntent().getStringExtra(Parameter.INTENT_DATE);
         if (StringUtils.isNotEmpty(name)) {
             action = new ActionCount();
             action.setName(name);
             action.setDate(TimeUtils.getCurrentTime());
             refashBtn();
         }
+        getSupportActionBar().setTitle(name);
+        getSupportActionBar().setSubtitle(date);
+        setUpView();
+    }
+
+    private void setUpView() {
+        hist_action.setLayoutManager(new LinearLayoutManager(this));
+        histCountAdapter = new HistCountAdapter(this, actionCounts);
+        hist_action.setAdapter(histCountAdapter);
+
     }
 
     @OnClick(R.id.count_btn)
     public void onCountClisk(View View) {
         ActionCount actionCount = new ActionCount();
         actionCount.setName(name);
-        actionCount.setDate(TimeUtils.getCurrentTime());
+        actionCount.setDate(TimeUtils.getCurrentDate());
         actionCount.setStartime(TimeUtils.getCurrentTime());
         actionCount.setDescription(TimeUtils.getCurrentTime() + ":(" + name + ")+1");
         ActionCountDao countDao = DBManager.getInstance(this).getWritableDaoSession().getActionCountDao();
         countDao.insert(actionCount);
-        Toast.makeText(CountActivity.this, "添加一次", Toast.LENGTH_LONG).show();
         refashBtn();
     }
 
@@ -69,17 +87,16 @@ public class CountActivity extends BaseActivity {
     private void refashBtn() {
         ActionCountDao countDao = DBManager.getInstance(this).getReadableDaoSession().getActionCountDao();
         QueryBuilder<ActionCount> queryBuilder = countDao.queryBuilder();
-//        if (countDao.hasKey(action)) {
-            actionCounts = queryBuilder.where(ActionCountDao.Properties.Name.eq(action.getName())).build().list();
-            if (actionCounts != null) {
-                count_btn.setText(name + "\n" + actionCounts.size());
+        actionCounts = queryBuilder.where(ActionCountDao.Properties.Name.eq(action.getName())).build().list();
+        if (actionCounts != null) {
+            count_btn.setText(name + "\n" + actionCounts.size());
 
-            } else {
-                count_btn.setText(name + "\n" + 0);
-            }
-//        } else {
-//            count_btn.setText(name + "\n" + 0);
-//        }
+        } else {
+            count_btn.setText(name + "\n" + 0);
+        }
+        if (histCountAdapter != null) {
+            histCountAdapter.setCountList(actionCounts);
+        }
     }
 
 

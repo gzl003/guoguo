@@ -6,4 +6,5 @@ package com.xuesen.helper;
 
 public class Parameter {
     public static final String INTENT_NAME = "name";
+    public static final String INTENT_DATE = "date";
 }

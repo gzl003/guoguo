@@ -69,6 +69,7 @@ public class ActionListAdapter extends RecyclerView.Adapter {
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, CountActivity.class);
                     intent.putExtra(Parameter.INTENT_NAME,action.getName());
+                    intent.putExtra(Parameter.INTENT_DATE,action.getDate());
                     mContext.startActivity(intent);
                 }
             });
