@@ -1,25 +1,23 @@
 package com.xuesen.utils;
 
-import android.content.Context;
 import android.view.Gravity;
 import android.widget.Toast;
+
+import com.xuesen.GuoApplication;
 
 /**
  * Created by Administrator on 2018/1/13.
  */
-
 public class ToastUtils {
     // Toast
     private static Toast toast;
 
     /**
-     *
-     * @param context
      * @param message
      */
-    public static void showShort(Context context, CharSequence message) {
+    public static void showShort(CharSequence message) {
         if (null == toast) {
-            toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+            toast = Toast.makeText(GuoApplication.getInstance(), message, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
         } else {
             toast.setText(message);
@@ -28,13 +26,11 @@ public class ToastUtils {
     }
 
     /**
-     *
-     * @param context
      * @param message
      */
-    public static void showShort(Context context, int message) {
+    public static void showShort(int message) {
         if (null == toast) {
-            toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+            toast = Toast.makeText(GuoApplication.getInstance(), message, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
         } else {
             toast.setText(message);
@@ -43,13 +39,11 @@ public class ToastUtils {
     }
 
     /**
-     *
-     * @param context
      * @param message
      */
-    public static void showLong(Context context, CharSequence message) {
+    public static void showLong(CharSequence message) {
         if (null == toast) {
-            toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+            toast = Toast.makeText(GuoApplication.getInstance(), message, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
         } else {
             toast.setText(message);
@@ -58,13 +52,11 @@ public class ToastUtils {
     }
 
     /**
-     *
-     * @param context
      * @param message
      */
-    public static void showLong(Context context, int message) {
+    public static void showLong(int message) {
         if (null == toast) {
-            toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+            toast = Toast.makeText(GuoApplication.getInstance(), message, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
         } else {
             toast.setText(message);
@@ -73,14 +65,12 @@ public class ToastUtils {
     }
 
     /**
-     *
-     * @param context
      * @param message
      * @param duration
      */
-    public static void show(Context context, CharSequence message, int duration) {
+    public static void show(CharSequence message, int duration) {
         if (null == toast) {
-            toast = Toast.makeText(context, message, duration);
+            toast = Toast.makeText(GuoApplication.getInstance(), message, duration);
             toast.setGravity(Gravity.CENTER, 0, 0);
         } else {
             toast.setText(message);
@@ -89,14 +79,12 @@ public class ToastUtils {
     }
 
     /**
-     *
-     * @param context
      * @param message
      * @param duration
      */
-    public static void show(Context context, int message, int duration) {
+    public static void show(int message, int duration) {
         if (null == toast) {
-            toast = Toast.makeText(context, message, duration);
+            toast = Toast.makeText(GuoApplication.getInstance(), message, duration);
             toast.setGravity(Gravity.CENTER, 0, 0);
         } else {
             toast.setText(message);
@@ -104,7 +92,9 @@ public class ToastUtils {
         toast.show();
     }
 
-    /** Hide the toast, if any. */
+    /**
+     * Hide the toast, if any.
+     */
     public static void hideToast() {
         if (null != toast) {
             toast.cancel();

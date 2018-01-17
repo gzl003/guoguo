@@ -14,8 +14,9 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2018/1/14.
+ * 统计页面adapter
  */
-public class HistCountAdapter extends RecyclerView.Adapter {
+public class CountAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     private List<ActionCount> countList;
@@ -26,7 +27,7 @@ public class HistCountAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public HistCountAdapter(Context mContext, List<ActionCount> countList) {
+    public CountAdapter(Context mContext, List<ActionCount> countList) {
         this.mContext = mContext;
         this.countList = countList;
         inflater = LayoutInflater.from(mContext);

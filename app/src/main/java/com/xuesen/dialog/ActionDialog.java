@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.xuesen.R;
 import com.xuesen.modle.Action;
 import com.xuesen.utils.StringUtils;
-import com.xuesen.utils.TimeUtils;
 import com.xuesen.view.BaseDialog;
 
 import butterknife.BindView;
@@ -51,12 +50,17 @@ public class ActionDialog extends BaseDialog {
         if (StringUtils.isNotEmpty(name) && editokListener != null) {
             Action action = new Action();
             action.setName(name);
-            action.setDate(TimeUtils.getCurrentDate());
             editokListener.onOKcLick(action);
             dismiss();
         } else {
             Toast.makeText(mContext, "请输入统计内容", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        edit_name.setText("");
     }
 
     public void setEditokListener(EditokListener editokListener) {

@@ -1,28 +1,44 @@
 package com.xuesen.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CalendarView;
 
 import com.xuesen.R;
+import com.xuesen.utils.ToastUtils;
 
-public class SettingActivity extends BaseActivity {
+import butterknife.BindView;
+
+/**
+ * 全部记录
+ * 选择日期
+ */
+public class ChooseDateActivity extends BaseActivity {
+
+    @BindView(R.id.calendarView)
+    CalendarView calendarView;
 
     @Override
     public void setUpView(Bundle savedInstanceState) {
-
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                ToastUtils.showShort(year + "年" + month + 1 + "月" + dayOfMonth + "日 \n 开发中尽请期待...");
+            }
+        });
+        calendarView.setMaxDate(System.currentTimeMillis());
     }
 
     @Override
     public int getContentViewID() {
-        return R.layout.activity_setting;
+        return R.layout.activity_choose_date;
     }
 
-    //actionbar
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.layout.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.xuesen.GuoApplication;
 import com.xuesen.R;
 import com.xuesen.adapter.ActionListAdapter;
 import com.xuesen.db.ActionDao;
@@ -81,11 +82,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_allhistory) {
+            Intent intent = new Intent(MainActivity.this, ChooseDateActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
     private void setUpView() {
+        actions.addAll(GuoApplication.getInstance().getSkills());
         actionadapter = new ActionListAdapter(actions, getApplication());
         recyclerView.setLayoutManager(new GridLayoutManager(this, 4, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(actionadapter);
@@ -95,16 +102,17 @@ public class MainActivity extends AppCompatActivity {
             public void onOKcLick(Action action) {
                 ActionDao actionDao = DBManager.getInstance(MainActivity.this).getReadableDaoSession().getActionDao();
                 QueryBuilder<Action> actionQueryBuilder = actionDao.queryBuilder();
-                actionQueryBuilder.where(ActionDao.Properties.Name.eq(action.getName()));
-                if (actionQueryBuilder.list() != null && actionQueryBuilder.list().size() > 0) {
-                    ToastUtils.showShort(MainActivity.this, action.getName() + "事件已经存在了");
-                } else if (actions.size() > 11) {
-                    ToastUtils.showShort(MainActivity.this, action.getName() + "事件已经满了");
-                } else {
-                    DBManager.getInstance(MainActivity.this).getWritableDaoSession().getActionDao().insert(action);
-                    update();
+                List<Action> actionList = actionQueryBuilder.list();
+                if (actionList.contains(action)) {
+                    ToastUtils.showShort(action.getName() + "事件已经存在了");
+                    return;
                 }
-
+                if (actions.size() > 11) {
+                    ToastUtils.showShort("事件已经满了");
+                    return;
+                }
+                DBManager.getInstance(MainActivity.this).getWritableDaoSession().getActionDao().insert(action);
+                update();
             }
         });
         update();
@@ -121,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             view.setTag(true);
             actionadapter.setEdit(true);
             remove.setText("完成");
-        }else{
+        } else {
             if ((boolean) view.getTag()) {
                 view.setTag(false);
                 remove.setText("删除");
@@ -134,9 +142,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void update() {
+        actions.clear();
         ActionDao actionDao = DBManager.getInstance(MainActivity.this).getReadableDaoSession().getActionDao();
         QueryBuilder<Action> actionQueryBuilder = actionDao.queryBuilder();
-        actions = actionQueryBuilder.build().list();
+        actions.addAll(GuoApplication.getInstance().getSkills());
+        actions.addAll(actionQueryBuilder.build().list());
         actionadapter.setActions(actions);
     }
 }

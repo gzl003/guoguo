@@ -10,26 +10,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.xuesen.GuoApplication;
 import com.xuesen.R;
 import com.xuesen.activity.CountActivity;
-import com.xuesen.activity.MainActivity;
 import com.xuesen.db.ActionDao;
 import com.xuesen.db.DBManager;
 import com.xuesen.helper.Parameter;
 import com.xuesen.modle.Action;
+import com.xuesen.utils.ToastUtils;
 
-import org.greenrobot.greendao.query.QueryBuilder;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *  * Created by 智光 on 2018/1/12 12:04
  *  
  */
-
 public class ActionListAdapter extends RecyclerView.Adapter {
 
-    private List<Action> actions;
+    private List<Action> actions = new ArrayList<>();
     private Context mContext;
     private LayoutInflater inflater;
 
@@ -41,8 +40,8 @@ public class ActionListAdapter extends RecyclerView.Adapter {
         inflater = LayoutInflater.from(context);
     }
 
-    public void setActions(List<Action> actions) {
-        this.actions = actions;
+    public void setActions(List<Action> actionlists) {
+        this.actions = actionlists;
         notifyDataSetChanged();
     }
 
@@ -68,17 +67,19 @@ public class ActionListAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, CountActivity.class);
-                    intent.putExtra(Parameter.INTENT_NAME,action.getName());
-                    intent.putExtra(Parameter.INTENT_DATE,action.getDate());
+                    intent.putExtra(Parameter.INTENT_NAME, action.getName());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
                 }
             });
             viewHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DBManager.getInstance(mContext).getWritableDaoSession().getActionDao().delete(action);
-                    actions = DBManager.getInstance(mContext).queryActionList();
-                    notifyDataSetChanged();
+                    if (GuoApplication.getInstance().getSkills().contains(action)) {
+                        ToastUtils.showShort(action.getName() + "是天生本领,不能被夺走");
+                    } else {
+                        detele(action);
+                    }
                 }
             });
             if (edit) {
@@ -102,6 +103,15 @@ public class ActionListAdapter extends RecyclerView.Adapter {
             super(itemView);
             action_name = itemView.findViewById(R.id.action_name);
             delete = itemView.findViewById(R.id.delete);
+        }
+    }
+
+    public void detele(Action action) {
+        ActionDao actionDao = DBManager.getInstance(mContext).getWritableDaoSession().getActionDao();
+        if (actionDao.hasKey(action)) {
+            actionDao.delete(action);
+            actions.remove(action);
+            notifyDataSetChanged();
         }
     }
 }
