@@ -25,5 +25,14 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="setting_btn_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/ic_white</item>
+        <item name="android:drawableRight">@drawable/ic_next</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">@dimen/text_smill</item>
+        <item name="android:textColor">@color/gray1</item>
+    </style>
 
 </resources>

@@ -82,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+
+        if (id == R.id.action_addbaby) {
+            ToastUtils.showShort("开发者尽请期待...");
+            return true;
+        }
+
         if (id == R.id.action_allhistory) {
             Intent intent = new Intent(MainActivity.this, ChooseDateActivity.class);
             startActivity(intent);

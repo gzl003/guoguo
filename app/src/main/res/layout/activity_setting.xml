@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context="com.xuesen.activity.SettingActivity">
 
-
-
+    <Button
+        android:id="@+id/checkUpdate_btn"
+        style="@style/setting_btn_item"
+        android:text="@string/check_upadte"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 </android.support.constraint.ConstraintLayout>
