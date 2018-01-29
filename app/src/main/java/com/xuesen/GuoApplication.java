@@ -45,6 +45,11 @@ public class GuoApplication extends Application {
         for (int i = 0; i < list_skill.length; i++) {
             Action action = new Action();
             action.setName(list_skill[i]);
+//            if (action.getName().equals("体温")) {
+//                action.setType(2);
+//            } else {
+//                action.setType(1);
+//            }
             list.add(action);
         }
     }

@@ -23,6 +23,7 @@ import com.xuesen.utils.TimeUtils;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -79,7 +80,7 @@ public class CountActivity extends BaseActivity implements CalendarDialog.OnSele
         actionCount.setName(name);
         actionCount.setDate(TimeUtils.getCurrentDate());
         actionCount.setStartime(TimeUtils.getCurrentTime());
-        actionCount.setDescription(TimeUtils.getCurrentTime() + ":(" + name + ")+1");
+        actionCount.setDescription(TimeUtils.getCurrentTime() + ": " + name + " 一次");
         ActionCountDao countDao = DBManager.getInstance(this).getWritableDaoSession().getActionCountDao();
         countDao.insert(actionCount);
         refashBtn();
@@ -87,9 +88,11 @@ public class CountActivity extends BaseActivity implements CalendarDialog.OnSele
 
 
     private void refashBtn() {
-        ActionCountDao countDao = DBManager.getInstance(this).getReadableDaoSession().getActionCountDao();
-        QueryBuilder<ActionCount> queryBuilder = countDao.queryBuilder();
-        actionCounts = queryBuilder.where(ActionCountDao.Properties.Name.eq(action.getName())).build().list();
+        ActionCountDao actionCountDao = DBManager.getInstance(this).getReadableDaoSession().getActionCountDao();
+        QueryBuilder<ActionCount> queryBuilder = actionCountDao.queryBuilder();
+        queryBuilder.where(ActionCountDao.Properties.Date.eq(date), ActionCountDao.Properties.Name.eq(name));
+        actionCounts = queryBuilder.build().list();
+        Collections.reverse(actionCounts);
         if (actionCounts != null) {
             count_btn.setText(name + "\n" + actionCounts.size());
 

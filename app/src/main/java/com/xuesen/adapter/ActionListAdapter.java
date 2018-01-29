@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.xuesen.GuoApplication;
 import com.xuesen.R;
+import com.xuesen.activity.BodyHeatActivity;
 import com.xuesen.activity.CountActivity;
 import com.xuesen.db.ActionDao;
 import com.xuesen.db.DBManager;
@@ -66,10 +67,21 @@ public class ActionListAdapter extends RecyclerView.Adapter {
             viewHolder.action_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, CountActivity.class);
-                    intent.putExtra(Parameter.INTENT_NAME, action.getName());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(intent);
+                    Intent intent;
+                    switch (action.getType()) {
+                        case 1:
+                            intent = new Intent(mContext, CountActivity.class);
+                            intent.putExtra(Parameter.INTENT_NAME, action.getName());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mContext.startActivity(intent);
+                            break;
+                        case 2:
+                            intent = new Intent(mContext, BodyHeatActivity.class);
+                            intent.putExtra(Parameter.INTENT_NAME, action.getName());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mContext.startActivity(intent);
+                            break;
+                    }
                 }
             });
             viewHolder.delete.setOnClickListener(new View.OnClickListener() {
