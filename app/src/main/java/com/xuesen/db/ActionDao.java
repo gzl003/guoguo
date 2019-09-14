@@ -29,7 +29,8 @@ public class ActionDao extends AbstractDao<Action, Long> {
         public final static Property Startime = new Property(2, long.class, "startime", false, "STARTIME");
         public final static Property Endtime = new Property(3, long.class, "endtime", false, "ENDTIME");
         public final static Property Description = new Property(4, String.class, "description", false, "DESCRIPTION");
-        public final static Property Date = new Property(5, String.class, "date", false, "DATE");
+        public final static Property Type = new Property(5, int.class, "type", false, "TYPE");
+        public final static Property Date = new Property(6, String.class, "date", false, "DATE");
     }
 
 
@@ -50,7 +51,8 @@ public class ActionDao extends AbstractDao<Action, Long> {
                 "\"STARTIME\" INTEGER NOT NULL ," + // 2: startime
                 "\"ENDTIME\" INTEGER NOT NULL ," + // 3: endtime
                 "\"DESCRIPTION\" TEXT," + // 4: description
-                "\"DATE\" TEXT);"); // 5: date
+                "\"TYPE\" INTEGER NOT NULL ," + // 5: type
+                "\"DATE\" TEXT);"); // 6: date
     }
 
     /** Drops the underlying database table. */
@@ -79,10 +81,11 @@ public class ActionDao extends AbstractDao<Action, Long> {
         if (description != null) {
             stmt.bindString(5, description);
         }
+        stmt.bindLong(6, entity.getType());
  
         String date = entity.getDate();
         if (date != null) {
-            stmt.bindString(6, date);
+            stmt.bindString(7, date);
         }
     }
 
@@ -106,10 +109,11 @@ public class ActionDao extends AbstractDao<Action, Long> {
         if (description != null) {
             stmt.bindString(5, description);
         }
+        stmt.bindLong(6, entity.getType());
  
         String date = entity.getDate();
         if (date != null) {
-            stmt.bindString(6, date);
+            stmt.bindString(7, date);
         }
     }
 
@@ -126,7 +130,8 @@ public class ActionDao extends AbstractDao<Action, Long> {
             cursor.getLong(offset + 2), // startime
             cursor.getLong(offset + 3), // endtime
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // description
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // date
+            cursor.getInt(offset + 5), // type
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // date
         );
         return entity;
     }
@@ -138,7 +143,8 @@ public class ActionDao extends AbstractDao<Action, Long> {
         entity.setStartime(cursor.getLong(offset + 2));
         entity.setEndtime(cursor.getLong(offset + 3));
         entity.setDescription(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setDate(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setType(cursor.getInt(offset + 5));
+        entity.setDate(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
      }
     
     @Override

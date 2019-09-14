@@ -17,6 +17,7 @@ import com.xuesen.utils.StringUtils;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -56,6 +57,7 @@ public class HistoryCountActivity extends BaseActivity {
         QueryBuilder<ActionCount> queryBuilder = actionCountDao.queryBuilder();
         queryBuilder.where(Properties.Date.eq(date), Properties.Name.eq(name));
         countList = queryBuilder.build().list();
+        Collections.reverse(countList);
         histCountAdapter.setCountList(countList);
     }
 

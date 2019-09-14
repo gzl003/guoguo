@@ -17,16 +17,18 @@ public class Action {
     private long startime;
     private long endtime;
     private String description;
+    private int type;//事件类型 1,普通次数,2,温度体温
     private String date;//2018/1/12
 
-    @Generated(hash = 496338150)
+    @Generated(hash = 1908135510)
     public Action(Long id, String name, long startime, long endtime,
-                  String description, String date) {
+                  String description, int type, String date) {
         this.id = id;
         this.name = name;
         this.startime = startime;
         this.endtime = endtime;
         this.description = description;
+        this.type = type;
         this.date = date;
     }
 
@@ -80,5 +82,13 @@ public class Action {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getType() {
+        return this.type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

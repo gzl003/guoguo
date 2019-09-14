@@ -53,7 +53,7 @@ public class ActionDialog extends BaseDialog {
             editokListener.onOKcLick(action);
             dismiss();
         } else {
-            Toast.makeText(mContext, "请输入统计内容", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "请输入内容", Toast.LENGTH_SHORT).show();
         }
     }
 

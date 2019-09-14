@@ -3,10 +3,15 @@ package com.xuesen.activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.tencent.bugly.beta.Beta;
 import com.xuesen.R;
 
+import butterknife.OnClick;
+
 public class SettingActivity extends BaseActivity {
+
 
     @Override
     public void setUpView(Bundle savedInstanceState) {
@@ -16,6 +21,12 @@ public class SettingActivity extends BaseActivity {
     @Override
     public int getContentViewID() {
         return R.layout.activity_setting;
+    }
+
+    @OnClick(R.id.checkUpdate_btn)
+    public void onUpdateClick(View view) {
+        /***** 检查更新 *****/
+        Beta.checkUpgrade();
     }
 
     //actionbar

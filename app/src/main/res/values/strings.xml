@@ -16,6 +16,7 @@
         <item>清醒</item>
         <item>粑粑</item>
         <item>尿尿</item>
+      <!--  <item>体温</item>-->
     </string-array>
     <!-- Strings related to Settings -->
 
@@ -90,10 +91,11 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="btn">按钮</string>
     <string name="text_delete">删除</string>
-    <string name="edit_action">编辑事件</string>
-    <string name="edit_action_name">统计事件的名称</string>
+    <string name="edit_action">add new skill</string>
+    <string name="edit_action_name">编辑新本领</string>
     <string name="btn_ok">完成</string>
-    <string name="baby_activity">Baby活动</string>
+    <string name="baby_activity">Baby成长记</string>
     <string name="btn_add">添加新本领</string>
     <string name="btn_remove">删除</string>
+    <string name="check_upadte">检查更新</string>
 </resources>

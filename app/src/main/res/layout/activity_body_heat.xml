@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xuesen.activity.SettingActivity">
+    tools:context="com.xuesen.activity.BodyHeatActivity">
 
-    <Button
-        android:id="@+id/checkUpdate_btn"
-        style="@style/setting_btn_item"
-        android:text="@string/check_upadte"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+    <Chronometer
+        android:id="@+id/chronometer3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="75dp"
+        tools:layout_editor_absoluteY="94dp" />
 </android.support.constraint.ConstraintLayout>
